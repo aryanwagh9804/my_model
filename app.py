@@ -17,7 +17,7 @@ def ask():
     # Send to your local Ollama via ngrok
     try:
         res = requests.post(
-            'https://19cd6a723517.ngrok-free.app/api/generate',
+            'https://30e9fb5dba8a.ngrok-free.app/api/generate',
             json={"model":"gemma3:1b",prompt": prompt},
             timeout=20
         )
