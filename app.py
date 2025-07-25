@@ -1,24 +1,22 @@
 from flask import Flask, request, jsonify
-import requests
 from flask_cors import CORS
+import requests  # if you're calling local Ollama
 
 app = Flask(__name__)
-CORS(app)  # Allow calls from frontend
+CORS(app)
 
-# Your ngrok tunnel for Ollama model
-OLLAMA_URL = " https://628bb7d72f9f.ngrok-free.app"  # <-- change to your tunnel URL
+@app.route('/')
+def home():
+    return "Flask server is live!"
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    user_prompt = request.json.get("prompt", "")
-    payload = {
-        "model": "gemma3:1b",
-        "prompt": user_prompt,
-        "stream": False
-    }
-    response = requests.post(f"{OLLAMA_URL}/api/generate", json=payload)
-    result = response.json()
-    return jsonify({"reply": result['response']})
+@app.route('/ask', methods=['POST'])
+def ask():
+    data = request.json
+    prompt = data.get('prompt', '')
+
+    # Send request to your local Ollama running at home using ngrok or other tunnel
+    response = requests.post('https://628bb7d72f9f.ngrok-free.app/api/generate', json={"prompt": prompt})
+    return jsonify(response.json())
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=False, host='0.0.0.0', port=5000)
