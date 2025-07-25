@@ -16,10 +16,14 @@
       const res = await fetch('https://my-model-1.onrender.com/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({prompt})
+        body: JSON.stringify({ prompt })
       });
+
       const data = await res.json();
-      document.getElementById('response').innerText = data.reply;
+
+      // Check if the nested response exists
+      const replyText = data.response?.response || "No reply received or error!";
+      document.getElementById('response').innerText = replyText;
     }
   </script>
 </body>
