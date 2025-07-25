@@ -13,7 +13,7 @@
   <script>
     async function sendPrompt() {
       const prompt = document.getElementById('prompt').value;
-      const res = await fetch(' https://7da6330bdb8c.ngrok-free.app/ask', {
+      const res = await fetch('https://7da6330bdb8c.ngrok-free.app/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ prompt })
