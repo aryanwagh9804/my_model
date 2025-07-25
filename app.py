@@ -15,7 +15,7 @@ def ask():
     prompt = data.get('prompt', '')
 
     # Send request to your local Ollama running at home using ngrok or other tunnel
-    response = requests.post(' https://19cd6a723517.ngrok-free.app/api/generate', json={"prompt": prompt})
+    response = requests.post(' https://19cd6a723517.ngrok-free.app/api/generate', json={model="gemma3:1b","prompt": prompt})
     return jsonify(response.json())
 
 if __name__ == '__main__':
