@@ -18,7 +18,7 @@ def ask():
     try:
         res = requests.post(
             'https://30e9fb5dba8a.ngrok-free.app/api/generate',
-            json={"model":"gemma3:1b",prompt": prompt},
+            json={"model":"gemma3:1b","prompt": prompt},
             timeout=20
         )
         print("Raw Ollama Response:", res.text)  # 👈 Debugging line
