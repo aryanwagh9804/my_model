@@ -1,33 +1,21 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS
-import requests
-
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
 @app.route('/ask', methods=['POST'])
 def ask():
     data = request.json
     prompt = data.get('prompt', '')
 
-    # Send to your local Ollama via ngrok
     try:
-        res = requests.post(
-            'https://30e9fb5dba8a.ngrok-free.app/api/generate',
-            json={"model":"gemma3:1b","prompt": prompt},
-            timeout=20
-        )
-        print("Raw Ollama Response:", res.text)  # 👈 Debugging line
+        # Remove extra space before URL if there is any
+        ollama_url = 'https://30e9fb5dba8a.ngrok-free.app/api/generate'
 
-        # Return entire Ollama JSON for now
-        return jsonify({"response": res.json()})
+        res = requests.post(ollama_url, json={"prompt": prompt}, timeout=20)
+
+        print("Status Code:", res.status_code)
+        print("Raw Response:", res.text)
+
+        # Try parsing response
+        response_data = res.json()
+        return jsonify({"reply": response_data.get("response", "No reply field in Ollama response.")})
+
     except Exception as e:
-        print("Error:", str(e))
-        return jsonify({"error": "Failed to get response from Ollama"}), 500
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+        print("ERROR:", str(e))  # 👈 Will print the real error
+        return jsonify({"reply": "No reply received or error!"}), 500
