@@ -13,7 +13,7 @@
   <script>
     async function sendPrompt() {
       const prompt = document.getElementById('prompt').value;
-      const res = await fetch('/chat', {
+      const res = await fetch('https://my-model-1.onrender.com/chat', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({prompt})
