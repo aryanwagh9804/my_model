@@ -13,16 +13,14 @@
   <script>
     async function sendPrompt() {
       const prompt = document.getElementById('prompt').value;
-      const res = await fetch('https://7da6330bdb8c.ngrok-free.app/ask', {
+      const res = await fetch('/ask', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ prompt })
       });
 
       const data = await res.json();
-
-      // Check if the nested response exists
-      const replyText = data.response?.response || "No reply received or error!";
+      const replyText = data.reply || "No reply received or error!";
       document.getElementById('response').innerText = replyText;
     }
   </script>
