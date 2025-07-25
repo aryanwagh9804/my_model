@@ -7,7 +7,7 @@ CORS(app)
 
 @app.route('/')
 def home():
-    return "Flask server is live!"
+    return render_template('index.html')
 
 @app.route('/ask', methods=['POST'])
 def ask():
